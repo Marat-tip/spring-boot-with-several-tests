@@ -15,4 +15,9 @@ public class PhoneValidationTest {
     public void invalidLengthPhone() {
         assertSame(PhoneValidationResult.INVALID_LENGTH, validator.validatePhone("123456"));
     }
+
+    @Test
+    public void invalidStart() {
+        assertSame(PhoneValidationResult.INVALID_START, validator.validatePhone("1234567890"));
+    }
 }
