@@ -1,5 +1,7 @@
 package kz.halykacademy.testappp;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ public class Author {
 
     private String firstName;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     public Long getId() {
