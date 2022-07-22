@@ -1,5 +1,10 @@
 package kz.halykacademy.testappp;
 
+import org.springframework.data.annotation.Version;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,13 +19,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/authors")
+@RequestMapping("/v1/authors")
 public class AuthorController {
     private static LinkedList<AuthorDTO> AUTHORS = new LinkedList(List.of(new AuthorDTO(1L, "Author", LocalDateTime.now())));
 
     @GetMapping
-    public List<AuthorDTO> getAuthors() {
-        return AUTHORS;
+    public Page<AuthorDTO> getAuthors(
+            Pageable pageRequest
+    ) {
+        return new PageImpl(
+                AUTHORS.stream().skip(pageRequest.getOffset()).limit(pageRequest.getPageSize()).collect(Collectors.toList())
+        );
     }
 
     @PostMapping
@@ -54,10 +63,9 @@ public class AuthorController {
     public void delete(
             @PathVariable Long id
     ) {
-        throw new IllegalArgumentException("WTF");
-//        AUTHORS = new LinkedList(AUTHORS.stream()
-//                .filter(authorDTO -> !authorDTO.getId().equals(id)).findFirst()
-//                .stream().collect(Collectors.toList()));
+        AUTHORS = new LinkedList(AUTHORS.stream()
+                .filter(authorDTO -> !authorDTO.getId().equals(id)).findFirst()
+                .stream().collect(Collectors.toList()));
 
     }
 }
