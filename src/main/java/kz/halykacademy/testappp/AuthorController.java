@@ -1,13 +1,11 @@
 package kz.halykacademy.testappp;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -56,9 +54,10 @@ public class AuthorController {
     public void delete(
             @PathVariable Long id
     ) {
-        AUTHORS = new LinkedList(AUTHORS.stream()
-                .filter(authorDTO -> !authorDTO.getId().equals(id)).findFirst()
-                .stream().collect(Collectors.toList()));
+        throw new IllegalArgumentException("WTF");
+//        AUTHORS = new LinkedList(AUTHORS.stream()
+//                .filter(authorDTO -> !authorDTO.getId().equals(id)).findFirst()
+//                .stream().collect(Collectors.toList()));
 
     }
 }
@@ -75,8 +74,7 @@ class AuthorRequest {
     }
 }
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
-class ResourceNotFoundException extends RuntimeException{
+class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {
         super(message);
     }
